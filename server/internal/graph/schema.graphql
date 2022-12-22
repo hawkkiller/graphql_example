@@ -2,11 +2,12 @@ type Todo {
   id: ID!
   text: String!
   done: Boolean!
-  user: User!
 }
 
-type User {
-  id: ID!
-  name: String!
-  todos: [Todo!]!
+input CreateTodoInput {
+  text: String!
+}
+
+type Mutation {
+  createTodo(input: CreateTodoInput!): Todo!
 }
