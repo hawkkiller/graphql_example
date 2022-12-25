@@ -1,0 +1,12 @@
+targets:
+  $default:
+    builders:
+      artemis:
+        options:
+          schema_mapping:
+            - output: lib/common/graphql/todos_query.graphql.dart
+              schema: lib/common/graphql/schema.graphql
+              queries_glob: lib/common/graphql/queries/**.graphql
+            - output: lib/common/graphql/todos_mutation.graphql.dart
+              schema: lib/common/graphql/schema.graphql
+              queries_glob: lib/common/graphql/mutations/**.graphql

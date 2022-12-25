@@ -10,21 +10,33 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/hawkkiller/graphql_example/server/internal/graph/model"
+	"github.com/hawkkiller/graphql_example/server/internal/graph/customTypes"
+	"github.com/hawkkiller/graphql_example/server/internal/model"
 )
 
 // CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.CreateTodoInput) (*model.Todo, error) {
+func (r *mutationResolver) CreateTodo(ctx context.Context, input customTypes.CreateTodoInput) (*model.Todo, error) {
 	rand, _ := rand.Int(rand.Reader, big.NewInt(100))
 	todo := &model.Todo{
-		Text:   input.Text,
-		ID:     fmt.Sprintf("T%d", rand),
+		Text: input.Text,
+		ID:   fmt.Sprintf("T%d", rand),
 	}
-	r.todos = append(r.todos, todo)
+	r.DB.Create(&model.Todo{Text: input.Text})
 	return todo, nil
+}
+
+// Todos is the resolver for the todos field.
+func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+	todos := []*model.Todo{}
+	r.DB.Find(&todos)
+	return todos, nil
 }
 
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
 
+// Query returns QueryResolver implementation.
+func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
+
 type mutationResolver struct{ *Resolver }
+type queryResolver struct{ *Resolver }
