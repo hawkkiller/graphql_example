@@ -10,3 +10,6 @@ targets:
             - output: lib/common/graphql/todos_mutation.graphql.dart
               schema: lib/common/graphql/schema.graphql
               queries_glob: lib/common/graphql/mutations/**.graphql
+            - output: lib/common/graphql/todos_subscriptions.graphql.dart
+              schema: lib/common/graphql/schema.graphql
+              queries_glob: lib/common/graphql/subscriptions/**.graphql

@@ -15,3 +15,7 @@ type Query {
 type Mutation {
   createTodo(input: CreateTodoInput!): Todo!
 }
+
+type Subscription {
+  todos: [Todo!]!
+}

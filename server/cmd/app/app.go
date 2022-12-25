@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/hawkkiller/graphql_example/server/internal/graph"
 	"github.com/hawkkiller/graphql_example/server/pkg/db"
@@ -18,11 +19,16 @@ func main() {
 		log.Fatalf("%s must be set", "PORT")
 	}
 
+	notifyChan := make(chan interface{})
+
 	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{
 		Resolvers: &graph.Resolver{
-			DB: db.Open(),
+			DB:          db.Open(),
+			ChangesChan: notifyChan,
 		},
 	}))
+
+	srv.AddTransport(&transport.Websocket{})
 
 	mux := http.NewServeMux()
 

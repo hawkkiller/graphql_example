@@ -4,14 +4,18 @@ type Todo {
   done: Boolean!
 }
 
-type Query {
-  todos: [Todo!]!
-}
-
 input CreateTodoInput {
   text: String!
 }
 
+type Query {
+  todos: [Todo!]!
+}
+
 type Mutation {
   createTodo(input: CreateTodoInput!): Todo!
+}
+
+type Subscription {
+  todos: [Todo!]!
 }

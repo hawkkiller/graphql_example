@@ -14,6 +14,8 @@ dependencies:
 
   artemis: ^7.9.0-beta
   cupertino_icons: ^1.0.2
+  gql_websocket_link: ^0.3.3
+  gql_link: ^0.4.3-alpha+1659715356132
 
 dev_dependencies:
   flutter_test:
